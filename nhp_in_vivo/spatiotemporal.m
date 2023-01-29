@@ -1,4 +1,5 @@
 load('dataset_01.mat')
+load('led_mask.mat');
 
 % Synchronize to peak speed
 testpeaks = [750 821 875 940 1016 1087 1154 1229 1301 1380 1446 1522 1637 1706 1779 1849 1919 ];
@@ -12,13 +13,14 @@ for ii = 1:length(testpeaks)
 
     % Append data to vector
     seed = testpeaks(ii);
-    data_all(:,:,:,ii) = fr_sb_04_tb_10_hpf_0p5_s_01_100(:,:,seed-win+neurallag:seed+win+neurallag);
+    data_all(:,:,:,ii) = fr(:,:,seed-win:seed+win);
 
 end
 
 figure;
 
 % Time series vector
+fs = 40;
 tt = -win./fs:1/fs:(win-1)./fs;
 
 % Average the response over all reaches
